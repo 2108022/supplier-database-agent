@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "new_supplier_requests.schema.json",
+  "type": "object",
+  "required": ["company", "records"],
+  "properties": {
+    "company": {"type": "string"},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record_id", "NeedNewSupplier", "record_type", "prefilled_fields", "verified_research"],
+        "properties": {
+          "record_id": {"type": "string"},
+          "NeedNewSupplier": {"const": "YES"},
+          "record_type": {"enum": ["LEGAL_ENTITY", "PLANT_SITE", "RND_SITE"]},
+          "data_type": {"type": "object"},
+          "prefilled_fields": {"type": "object"},
+          "verified_research": {"type": "object"},
+          "fields_to_research": {"type": "array"},
+          "forbidden_parent_inheritance_fields": {"type": "array"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,22 @@
+{
+  "name": "supplier-database-agent",
+  "version": "2.3.0",
+  "private": true,
+  "description": "Company-agnostic supplier database research enrichment and Excel import pipeline",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node scripts/check-ready.js",
+    "init:references": "node scripts/init-references.js",
+    "company": "node scripts/run-company.js",
+    "pipeline": "node scripts/run-company.js"
+  },
+  "dependencies": {
+    "csv-parse": "^6.1.0",
+    "exceljs": "^4.4.0"
+  },
+  "packageManager": "pnpm@11.19.0"
+}

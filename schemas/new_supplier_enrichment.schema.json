@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "new_supplier_enrichment.schema.json",
+  "type": "object",
+  "required": ["company", "records"],
+  "properties": {
+    "company": {"type": "string"},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record_id", "record_type", "fields"],
+        "properties": {
+          "record_id": {"type": "string"},
+          "record_type": {"enum": ["LEGAL_ENTITY", "PLANT_SITE", "RND_SITE"]},
+          "fields": {"type": "object"},
+          "sources": {"type": "array"},
+          "review": {"type": "array"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

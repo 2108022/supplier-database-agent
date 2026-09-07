@@ -1,0 +1,129 @@
+请对当前 supplier-database-agent 项目完成第一次正式初始化。本轮不要研究任何公司。
+
+我的 GitHub 私有仓库地址：
+【你的GitHub仓库地址】
+
+请先完整阅读：
+1. AGENTS.md
+2. skills/research-skill/SKILL.md 及其 references 全部文件
+3. skills/database-enrichment/SKILL.md 及其 references 全部文件
+4. skills/new-supplier-enrichment/SKILL.md 及其 references 全部文件
+5. rules/ 下全部规则
+6. README、PROJECT_MAP、VERSION、CHANGELOG
+
+然后检查本机 references/ 中的真实运行文件：
+- supplier_master.xlsx
+- region_master.csv
+- productionbase_import_template.xlsx
+- rndcenter_import_template.xlsx
+- new_supplier_import_template.xlsx
+- 如果存在，PLANT_SITE / RND_SITE 历史新增样例
+
+本轮目标是把项目初始化成以后“只输入公司名即可运行”的长期工具，而不是处理某家公司。
+
+请完成以下事项：
+
+一、Reference 与模板识别
+1. 识别 supplier_master 的真实 Sheet、字段和类型。
+2. 识别 region_master 的 id、name、level、parentid、areacode、languagetype、internalprimarykey 等真实结构。
+3. 识别三个 Excel 导入模板的真实 Sheet、列顺序、字段类型、LanguageType、Key、DataType 等规则。
+4. 建立 canonical field -> 实际模板字段映射。
+5. 不修改 references 中任何真实原文件。
+
+二、DataType
+1. 从真实模板/历史成功样例确认 LEGAL_ENTITY 的 DataType。
+2. 从历史成功样例或明确规则确认 PLANT_SITE、RND_SITE DataType。
+3. 找不到时保持 unresolved，禁止猜值。
+
+三、通用流水线
+确认/完善统一流程：
+research.json
+→ normalized.json
+→ region_matches.json
+→ supplier_matches.json
+→ new-supplier enrichment（仅 NeedNewSupplier=YES）
+→ qa.json
+→ Excel export
+
+要求：
+- 研究数据不得写进公司专用程序。
+- 禁止 build_<company>_research.*、<company>_matcher.* 等公司专用代码。
+- 公司事实放 work/<company>/research.json。
+- 实体匹配、地区匹配、导出必须使用共享通用模块。
+- 支持阶段运行和单 record_id 局部重跑。
+- dry-run 不加载 Excel 模板。
+- Excel export 只做最终渲染，不重新研究或重新判断实体。
+
+四、性能与缓存
+1. supplier master 单次运行只加载/建索引一次。
+2. region master 单次运行只加载/建索引一次。
+3. 地区建立 byId/byParent/byAreaCode/byNormalizedName 等索引。
+4. 相同国家-省-市查询缓存复用。
+5. supplier alias / reviewed history 如存在必须真正接入。
+6. 主数据文件 hash/mtime 变化时只重建对应缓存。
+7. manifest 记录阶段耗时、缓存命中、QA统计。
+
+五、实体匹配硬规则
+1. 外部名称与数据库名称不同，仍可能是同一实体；要结合名称、地区ID、主营产品等做实体判断。
+2. 一旦确认对应库内记录，最终名称必须严格使用 supplier_master 原名称，包括大小写、符号、空格、标点。
+3. 额外 Site 不得降级匹配到 Parent Legal Entity。
+4. 例如 Proseat GmbH & Co. KG-Schwarzheide Plant 不得因为库中有 Proseat GmbH & Co. KG 就直接使用母体名称。
+5. 地区必须通过 region_master 的层级和归属链确认，禁止猜 ID。
+
+六、新增供应商
+NeedNewSupplier=YES 时才调用 new-supplier-enrichment。
+区分：
+- LEGAL_ENTITY
+- PLANT_SITE
+- RND_SITE
+
+PLANT_SITE/RND_SITE 如果不是独立法人：
+- 不得自动继承母公司 CRN
+- 不得自动继承母公司 TIN
+- 不得自动继承母公司注册资本
+- 不得自动继承母公司 CEO
+- 不得把集团员工数作为 Site 员工数
+
+复用 research-skill 已经找到的 Site、地址、产品、研发内容和来源；新增供应商阶段只补真正缺失字段，避免重复搜索。
+
+七、测试
+建立/完善回归测试，至少覆盖：
+- 通用词+同城不能导致 AAM/Brembo/Schaeffler 等错误实体匹配
+- Additional Site 不得降级为 Parent Entity
+- Region 多语言记录能回到正确 canonical ID
+- LanguageType 0/1/8 同 Key 地区 ID 一致
+- NEW Site 会进入 new supplier 输出
+- REVIEW_REQUIRED 不进入正式导入表
+
+八、本地数据与 GitHub
+1. 检查并完善 .gitignore。
+2. 以下真实本地文件必须继续供程序读取，但禁止提交 GitHub：
+   references/supplier_master.xlsx
+   references/region_master.csv
+   references/productionbase_import_template.xlsx
+   references/rndcenter_import_template.xlsx
+   references/new_supplier_import_template.xlsx
+3. output/、work/、cache/、node_modules/、config/local.json 不提交。
+4. GitHub 应提交 AGENTS、skills、rules、schemas、scripts、tests、配置样例、README、CHANGELOG、VERSION、.gitignore。
+
+九、GitHub 初始化
+1. 如果当前目录还不是 Git 仓库，初始化 Git。
+2. 默认分支使用 main。
+3. 将远程仓库设置为我上面提供的 GitHub 地址。
+4. 运行测试。
+5. 第一次提交信息：Initial supplier database agent
+6. 将 main 推送到 GitHub。
+
+十、完成后不要开始研究公司。
+
+最后向我汇报：
+- 本地项目路径
+- 5 个 reference 文件识别状态
+- 三个模板的实际字段
+- LEGAL_ENTITY / PLANT_SITE / RND_SITE 的 DataType 状态
+- 测试结果
+- 哪些文件被 .gitignore 排除
+- GitHub 仓库地址
+- 当前 VERSION
+- 当前是否已具备开始第一家公司的条件
+- 如不能，只列真正阻塞项

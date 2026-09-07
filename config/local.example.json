@@ -1,0 +1,22 @@
+{
+  "supplierMaster": "references/supplier_master.xlsx",
+  "supplierMasterFallbacks": ["references/supplier_master.csv"],
+  "regionMaster": "references/region_master.csv",
+  "productionBaseTemplate": "references/productionbase_import_template.xlsx",
+  "rndCenterTemplate": "references/rndcenter_import_template.xlsx",
+  "newSupplierTemplate": "references/new_supplier_import_template.xlsx",
+  "templateProfile": "config/template-profile.json",
+  "supplierAliasCandidates": [
+    "references/supplier_alias.csv",
+    "references/supplier_alias.xlsx",
+    "references/supplier_aliases.json"
+  ],
+  "reviewedHistoryCandidates": [
+    "references/reviewed_match_history.csv",
+    "references/reviewed_match_history.xlsx",
+    "references/reviewed_match_history.json"
+  ],
+  "outputDir": "output",
+  "workDir": "work",
+  "cacheDir": "cache"
+}

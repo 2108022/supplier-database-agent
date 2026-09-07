@@ -1,0 +1,35 @@
+整理【公司名称】的全球生产基地和研发中心，并按当前 supplier-database-agent 最新规则生成全部数据库正式导入文件和 Review。
+
+必须：
+1. 使用 skills/research-skill 中唯一的“生产基地 + 研发中心”组合 Skill 完成研究。
+2. 研究事实保存为 work/<company>/research.json，不得创建公司专用程序。
+3. 使用共享 database-enrichment 完成：
+   - Legal Entity / Site 结构判断
+   - 标准 Site 名称
+   - supplier_master 实体匹配
+   - region_master 地区 ID 匹配
+   - Existing / New / Review 分流
+4. NeedNewSupplier=YES 时才调用 new-supplier-enrichment，复用已有研究证据，只补真正缺失字段。
+5. 区分 LEGAL_ENTITY / PLANT_SITE / RND_SITE。
+6. 额外工厂/研发节点不得降级匹配为主体公司。
+7. 已确认库内记录必须使用 supplier_master 中完全一致的原名称。
+8. Country/Province/City 必须使用 region_master 对应数据库 ID，禁止猜测。
+9. 最后再展开 LanguageType 0/1/8 和 Key。
+10. REVIEW_REQUIRED 不进入正式导入文件，但要进入 Review。
+11. 正式 Excel 必须严格套用 references 中真实模板。
+12. 输出放 output/。
+
+优先复用已有缓存、alias、历史匹配和已下载来源；不要因为一条疑难记录全量重跑已经确认的记录。
+
+完成后汇报：
+- Production Base 数量
+- R&D Center 数量
+- Existing Supplier 数量
+- 新增 LEGAL_ENTITY 数量
+- 新增 PLANT_SITE 数量
+- 新增 RND_SITE 数量
+- REVIEW_REQUIRED 数量
+- QA Pass / Fail
+- 各阶段耗时
+- 缓存命中情况
+- 生成的文件路径

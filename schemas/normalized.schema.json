@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "normalized.schema.json",
+  "type": "object",
+  "required": ["company", "records"],
+  "properties": {
+    "company": {"type": "string"},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record_id", "dataset", "record_type", "legal_entity_name", "standard_site_name"],
+        "properties": {
+          "record_id": {"type": "string"},
+          "dataset": {"enum": ["PRODUCTION_BASE", "RND_CENTER"]},
+          "record_type": {"enum": ["LEGAL_ENTITY", "PLANT_SITE", "RND_SITE"]},
+          "legal_entity_name": {"type": "string"},
+          "standard_site_name": {"type": "string"},
+          "is_additional_site": {"type": "boolean"},
+          "geography": {"type": "object"},
+          "localized": {"type": "object"},
+          "sources": {"type": "array"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

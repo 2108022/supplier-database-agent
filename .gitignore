@@ -1,0 +1,55 @@
+# Local reference data -------------------------------------------------------
+# Keep documentation in references/ trackable, but never commit live database
+# extracts, import templates, aliases, reviewed decisions, or historical
+# successful-import samples. Both supplier_master.xlsx and the currently
+# available supplier_master.csv are covered.
+/references/*.xlsx
+/references/*.xls
+/references/*.xlsm
+/references/*.csv
+/references/*.tsv
+/references/*.parquet
+/references/*.json
+/references/*.jsonl
+/references/*.ndjson
+/references/*.sqlite
+/references/*.sqlite3
+/references/*.db
+
+# Runtime / generated data --------------------------------------------------
+/output/
+/work/
+/cache/
+
+# Machine-local configuration and secrets ----------------------------------
+/config/local.json
+.env
+.env.*
+!.env.example
+
+# Dependencies / language-generated files ----------------------------------
+node_modules/
+.pnpm-store/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+coverage/
+.venv/
+venv/
+
+# OS / editors --------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs / temporary Office files --------------------------------------------
+*.log
+*.tmp
+*.tmp.xlsx
+~$*.xlsx
+~$*.xls

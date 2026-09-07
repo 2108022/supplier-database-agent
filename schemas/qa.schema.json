@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qa.schema.json",
+  "type": "object",
+  "required": ["company", "records", "stats"],
+  "properties": {
+    "company": {"type": "string"},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record_id", "qa_status", "issues"],
+        "properties": {
+          "record_id": {"type": "string"},
+          "qa_status": {"enum": ["APPROVED", "REVIEW_REQUIRED", "REJECTED"]},
+          "issues": {"type": "array"},
+          "formal_outputs": {"type": "array"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "stats": {"type": "object"}
+  },
+  "additionalProperties": true
+}

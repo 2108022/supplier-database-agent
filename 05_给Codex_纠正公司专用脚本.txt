@@ -1,0 +1,12 @@
+停止当前公司专用实现。
+
+项目规则禁止创建 build_<company>_research、<company>_matcher、<company>_rules 等公司专用程序。
+
+请立即按 AGENTS.md 重构：
+1. 公司事实移到 work/<company>/research.json。
+2. 通用实体匹配逻辑移到共享 matcher。
+3. 通用地区逻辑移到共享 region 模块。
+4. 通用规则移到对应 Skill/rules。
+5. 删除或废弃本次新增的公司专用逻辑。
+6. 增加回归测试，确保下家公司不需要再次修同类问题。
+7. 只局部重跑受影响的记录，不要无必要全量重跑。

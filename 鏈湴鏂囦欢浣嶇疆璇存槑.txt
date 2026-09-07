@@ -1,0 +1,27 @@
+推荐 Windows 固定位置：
+
+C:\Users\你的Windows用户名\Documents\Codex\supplier-database-agent\
+
+完整本地结构至少应包含：
+
+supplier-database-agent\
+├─ AGENTS.md
+├─ skills\
+├─ rules\
+├─ scripts\               （第一次 Codex 初始化后完善）
+├─ tests\                 （第一次 Codex 初始化后完善）
+├─ references\
+│  ├─ supplier_master.xlsx
+│  ├─ region_master.csv
+│  ├─ productionbase_import_template.xlsx
+│  ├─ rndcenter_import_template.xlsx
+│  └─ new_supplier_import_template.xlsx
+├─ work\
+├─ cache\
+└─ output\
+
+注意：
+1. 五个真实数据库/reference 文件必须长期保留在本机 references 文件夹。
+2. 它们被 .gitignore 忽略，不会上传 GitHub，但 Codex 可以正常读取。
+3. 以后 supplier_master.xlsx 更新时，直接用新文件覆盖本地 references\supplier_master.xlsx。
+4. 不要把项目散落到多个版本文件夹；长期只维护这个 supplier-database-agent 文件夹。

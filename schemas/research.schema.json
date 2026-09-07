@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research.schema.json",
+  "title": "Supplier database research artifact",
+  "type": "object",
+  "required": ["company", "records"],
+  "properties": {
+    "company": {"type": "string", "minLength": 1},
+    "generated_at": {"type": "string"},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["dataset", "record_type", "legal_entity_name"],
+        "properties": {
+          "record_id": {"type": "string", "minLength": 1},
+          "dataset": {"enum": ["PRODUCTION_BASE", "RND_CENTER"]},
+          "record_type": {"enum": ["LEGAL_ENTITY", "PLANT_SITE", "RND_SITE"]},
+          "group_name": {"type": "string"},
+          "legal_entity_name": {"type": "string", "minLength": 1},
+          "standard_site_name": {"type": "string"},
+          "localized_names": {"type": "object"},
+          "geography": {"type": "object"},
+          "address": {"type": "string"},
+          "products": {"type": "object"},
+          "rd_scope": {"type": "object"},
+          "sources": {"type": "array"},
+          "status": {"type": "string"},
+          "remark": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

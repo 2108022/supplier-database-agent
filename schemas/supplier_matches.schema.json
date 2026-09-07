@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "supplier_matches.schema.json",
+  "type": "object",
+  "required": ["company", "records"],
+  "properties": {
+    "company": {"type": "string"},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["record_id", "supplier_match", "NeedNewSupplier"],
+        "properties": {
+          "record_id": {"type": "string"},
+          "NeedNewSupplier": {"enum": ["YES", "NO", "REVIEW_REQUIRED"]},
+          "supplier_match": {
+            "type": "object",
+            "required": ["status"],
+            "properties": {
+              "status": {"enum": ["MATCHED", "NEW", "REVIEW_REQUIRED"]},
+              "supplier_id": {"type": ["string", "null"]},
+              "supplier_name": {"type": ["string", "null"]},
+              "reason": {"type": "string"}
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

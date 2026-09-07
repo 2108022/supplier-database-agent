@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "manifest.schema.json",
+  "type": "object",
+  "required": ["manifest_version", "company", "latest_run_id", "latest_status", "runs"],
+  "properties": {
+    "manifest_version": {"const": 1},
+    "company": {"type": "string"},
+    "latest_run_id": {"type": "string"},
+    "latest_status": {"enum": ["RUNNING", "COMPLETED", "FAILED"]},
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["run_id", "started_at", "status", "stages", "cache"],
+        "properties": {
+          "run_id": {"type": "string"},
+          "status": {"enum": ["RUNNING", "COMPLETED", "FAILED"]},
+          "dry_run": {"type": "boolean"},
+          "record_id": {"type": ["string", "null"]},
+          "stages": {"type": "array"},
+          "cache": {"type": "array"},
+          "qa_statistics": {"type": ["object", "null"]},
+          "warnings": {"type": "array"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
